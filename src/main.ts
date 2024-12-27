@@ -1,22 +1,35 @@
 import { defineCommand } from 'citty'
-
-export const testCommand = defineCommand({
-  meta: {
-    name: 'test',
-    description: 'Run tests',
-  },
-  async run() {
-    console.log("Test is Successful...")
-  },
-})
+import { provider } from 'std-env'
+import nuxiPkg from '../package.json' assert { type: 'json' }
+import { commands } from './commands'
+import { setupGlobalConsole } from './utils/console'
+import { checkEngines } from './utils/engines'
+import { checkForUpdates } from './utils/update'
 
 export const main = defineCommand({
   meta: {
-    name: 'my-package',
-    version: '1.0.0',
-    description: 'My custom package',
+    name: nuxiPkg.name,
+    version: nuxiPkg.version,
+    description: nuxiPkg.description,
   },
-  subCommands: {
-    test: testCommand,
+  subCommands: commands,
+  async setup(ctx) {
+    const command = ctx.args._[0]
+    const dev = command === 'dev'
+    setupGlobalConsole({ dev })
+
+    // Check Node.js version and CLI updates in background
+    let backgroundTasks: Promise<any> | undefined
+    if (command !== '_dev' && provider !== 'stackblitz') {
+      backgroundTasks = Promise.all([
+        checkEngines(),
+        checkForUpdates(),
+      ]).catch(err => console.error(err))
+    }
+
+    // Avoid background check to fix prompt issues
+    if (command === 'init') {
+      await backgroundTasks
+    }
   },
-})
+}) as any /* TODO: Fix rollup type inline issue */

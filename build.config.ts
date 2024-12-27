@@ -20,8 +20,7 @@ export default defineBuildConfig({
   },
   entries: ['src/index'],
   externals: [
-    // '@nuxt/test-utils',
-    // 'fsevents',
+    'fsevents',
     'node:url',
     'node:buffer',
     'node:path',

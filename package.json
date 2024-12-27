@@ -34,11 +34,17 @@
     "@types/semver": "^7.5.8",
     "@vue/eslint-config-typescript": "^14.2.0",
     "citty": "^0.1.6",
+    "colorette": "^2.0.20",
     "consola": "^3.3.3",
     "eslint": "^9.17.0",
     "eslint-plugin-vue": "^9.32.0",
+    "ofetch": "^1.4.1",
     "semver": "^7.6.3",
+    "std-env": "^3.8.0",
     "unbuild": "^3.0.1",
     "unplugin-purge-polyfills": "^0.0.7"
+  },
+  "dependencies": {
+    "nuxi": "link:"
   }
 }
