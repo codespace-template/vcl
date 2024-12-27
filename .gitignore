@@ -1,0 +1,9 @@
+node_modules
+dist
+.vscode
+.nuxt
+nuxt-app
+.pnpm-store
+coverage
+cli
+cli-copy
